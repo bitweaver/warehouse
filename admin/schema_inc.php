@@ -6,7 +6,7 @@ $tables = array(
 	partno C(10) PRIMARY,
 	batch C(10) PRIMARY,
 	client C(4),
-	indate D,
+	indate T,
 	qty I4,
 	hold C1,
 	qtyin I4,
@@ -71,7 +71,7 @@ $tables = array(
 'warehouse_releases' => "
 	release_no C(10) PRIMARY,
 	lineno I4 PRIMARY,
-	rdate D,
+	rdate T,
 	client C(4),
 	custno C(10),
 	partno C(10),
