@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Product.php,v 1.1 2008/10/05 09:51:09 lsces Exp $ 
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Product.php,v 1.2 2008/10/05 10:39:55 lsces Exp $ 
  *
  * Copyright ( c ) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -223,13 +223,20 @@ class Product extends LibertyContent {
 		$selectSql = '';
 		$whereSql = '';
 		$bindVars = array();
-		array_push( $bindVars, $this->mContentTypeGuid );
+// Need to tidy bind when LC setup is restored!
+//		array_push( $bindVars, $this->mContentTypeGuid );
 		$this->getServicesSql( 'content_list_sql_function', $selectSql, $joinSql, $whereSql, $bindVars );
+
+		if ($client_id) {
+			$findesc = trim(strtoupper( $client_id ));
+			$whereSql = " AND pro.`client` = ? ";
+			array_push( $bindVars, $client_id );
+		} 
 
 		if ($find) {
 			$findesc = '%' . strtoupper( $find ) . '%';
-			$whereSql = " AND (UPPER(b.`title`) like ? or UPPER(b.`description`) like ?) ";
-			$bindVars = array( $bindVars, $findesc, $findesc );
+			$whereSql = " AND (UPPER(pro.`partno`) like ? ";
+			$bindVars = array( $bindVars, $findesc );
 		} 
 
 /* Keep until LC links are available
@@ -247,6 +254,7 @@ class Product extends LibertyContent {
   		$query = "SELECT pro.* 
 				$selectSql
 				FROM `".BIT_DB_PREFIX."warehouse_partlist` pro
+				WHERE pro.`partno` IS NOT NULL $whereSql
 				ORDER BY ".$this->mDb->convertSortmode($sort_mode);
 		$result = $this->mDb->query( $query ,$bindVars ,$max_records ,$offset );
 
@@ -258,9 +266,10 @@ class Product extends LibertyContent {
 		}
 
 		// Get total result count
-		$query_cant = "SELECT COUNT(pro.`partno`) FROM `".BIT_DB_PREFIX."warehouse_partlist` pro";
+		$query_cant = "SELECT COUNT(pro.`partno`) FROM `".BIT_DB_PREFIX."warehouse_partlist` pro ".
 //				INNER JOIN `".BIT_DB_PREFIX."liberty_content` lc ON ( lc.`content_id` = ir.`content_id` ) $joinSql
 //				WHERE lc.`content_type_guid` = ? $whereSql";
+				"WHERE pro.`partno` IS NOT NULL $whereSql";
 		$pParamHash["cant"] = $this->mDb->getOne($query_cant, $bindVars);
 
 		// add all pagination info to pParamHash
