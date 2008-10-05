@@ -5,7 +5,6 @@
 	</div>
 
 	<div class="body">
-		{* minifind *}
 
 		<div class="navbar">
 			<ul class="sortby">
@@ -28,17 +27,17 @@
 		<ul class="clear data">
 			{foreach from=$warehouseList key=warehouseId item=warehouse}
 				<li class="item {cycle values='odd,even'} {$warehouse.warehouse}">
-					<h2><a href="{$warehouse.display_url}">{if $gBitSystem->isFeatureActive('warehouse_list_warehouse')}{$warehouse.name|escape}</a></h2>
+					<h2><a href="{$warehouse.display_url}">{$warehouse.warehouse|escape}</a></h2>
 
 					{if $gBitSystem->isFeatureActive('warehouse_list_name')}
-						<p>$warehouse.name</p>
+						{$warehouse.name}&nbsp;&nbsp;
 					{/if}
 						
-					{if $gBitSystem->isFeatureActive('warehouse_list_location' ) )}
-							{tr}Location{/tr}: {$warehouse.location}<br />
+					{if $gBitSystem->isFeatureActive('warehouse_list_location' )}
+							{tr}Location{/tr}: {$warehouse.location}&nbsp;&nbsp;
 					{/if}
-					{if $gBitSystem->isFeatureActive('warehouse_list_palletcnt' ) )}
-							{tr}Pallet Count{/tr}: {$warehouse.pallet_cnt}<br />
+					{if $gBitSystem->isFeatureActive('warehouse_list_palletcnt' )}
+							{tr}Pallet Count{/tr}: {$warehouse.pallet_cnt}
 					{/if}
 
 					<div class="clear"></div>

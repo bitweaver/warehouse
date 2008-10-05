@@ -1,11 +1,14 @@
 {strip}
 <div class="listing warehouse">
 	<div class="header">
-		<h1>{tr}Client list for warehouse{/tr}{if gWarehouseId} gWarehouseId{/if}</h1>
+		{if $gWarehouseId}
+			<h1>{tr}Client list for warehouse{/tr}{if $gWarehouseId} $gWarehouseId{/if}</h1>
+		{else}
+			<h1>{tr}Client list{/tr}</h1>
+		{/if}
 	</div>
 
 	<div class="body">
-		{* minifind *}
 
 		<div class="navbar">
 			<ul class="sortby">
@@ -29,14 +32,12 @@
 					<h2><a href="{$client.display_url}">{if $gBitSystem->isFeatureActive('warehouse_list_client')}{$client.name|escape}{else}Client ID {$client.client}{/if}</a></h2>
 
 					{if $gBitSystem->isFeatureActive('warehouse_list_contact')}
-						<p>$client.contact</p>
+						{$client.contact}&nbsp;&nbsp;
 					{/if}
 						
-					{if $gBitSystem->isFeatureActive('warehouse_list_palletcnt' ) )}
-						<div class="date">
-							{tr}Full Pallets{/tr}: {$client.fullp}<br />
-							{tr}Partial Pallets{/tr}: {$client.part}<br />
-						</div>
+					{if $gBitSystem->isFeatureActive('warehouse_list_palletcnt' )}
+							{tr}Full Pallets{/tr}: {$client.fullp}&nbsp;&nbsp;
+							{tr}Partial Pallets{/tr}: {$client.part}
 					{/if}
 
 					<div class="clear"></div>

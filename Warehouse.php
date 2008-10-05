@@ -14,6 +14,8 @@
  */
 require_once( LIBERTY_PKG_PATH.'LibertyContent.php' );		// IRList base class
 
+define('WAREHOUSE_CONTENT_TYPE_GUID', 'warehouse' );
+
 /**
  * @package warehouse
  */
@@ -33,13 +35,13 @@ class Warehouse extends LibertyContent {
 				'content_type_guid' => WAREHOUSE_CONTENT_TYPE_GUID,
 				'content_description' => 'Warehosue Location',
 				'handler_class' => 'Warehouse',
-				'handler_package' => 'warehosue',
+				'handler_package' => 'warehouse',
 				'handler_file' => 'Warehouse.php',
 				'maintainer_url' => 'http://www.lsces.co.uk'
 			) );
 		$this->mWarehouseId = (int)$pWarehouseId;
 		$this->mContentId = (int)$pContentId;
-		$this->mContentTypeGuid = WAREHOSUE_CONTENT_TYPE_GUID;
+		$this->mContentTypeGuid = WAREHOUSE_CONTENT_TYPE_GUID;
 	}
 
 	/**
@@ -211,7 +213,7 @@ class Warehouse extends LibertyContent {
 			$pContentId = $this->mContentId;
 		}
 
-		return IRLIST_PKG_URL.'index.php?content_id='.$pContentId;
+		return WAREHOUSE_PKG_URL.'index.php?content_id='.$pContentId;
 	}
 
 	/**
@@ -269,7 +271,7 @@ class Warehouse extends LibertyContent {
 		global $gBitSystem, $gBitUser;
 
 		if( empty( $pParamHash["sort_mode"] ) ) {
-			$pParamHash["sort_mode"] = 'warehouse_desc';
+			$pParamHash["sort_mode"] = 'warehouse_asc';
 		}
 		LibertyContent::prepGetList( $pParamHash );
 
@@ -289,32 +291,35 @@ class Warehouse extends LibertyContent {
 			$bindVars = array( $bindVars, $findesc, $findesc );
 		} 
 
-		$query = "SELECT wh.*, lc.*, 
+/* Keep until LC links are available
+  		$query = "SELECT wh.*, lc.*, 
 				uue.`login` AS modifier_user, uue.`real_name` AS modifier_real_name,
 				uuc.`login` AS creator_user, uuc.`real_name` AS creator_real_name,
-				uux.`login` AS closed_user, uuc.`real_name` AS closed_real_name
 				$selectSql
-				FROM `".BIT_DB_PREFIX."wharehouse_list` wh
-				INNER JOIN `".BIT_DB_PREFIX."liberty_content` lc ON ( lc.`content_id` = ir.`content_id` ) $joinSql
+				FROM `".BIT_DB_PREFIX."warehouse_list` wh
+				INNER JOIN `".BIT_DB_PREFIX."liberty_content` lc ON ( lc.`content_id` = wh.`content_id` ) $joinSql
 				LEFT JOIN `".BIT_DB_PREFIX."users_users` uue ON (uue.`user_id` = lc.`modifier_user_id`)
 				LEFT JOIN `".BIT_DB_PREFIX."users_users` uuc ON (uuc.`user_id` = lc.`user_id`)
-				LEFT JOIN `".BIT_DB_PREFIX."users_users` uux ON (uux.`user_id` = ir.`closed_user_id`)
 				WHERE lc.`content_type_guid` = ? $whereSql
-				ORDER BY ".$this->mDb->convert_sortmode($sort_mode);
-
+				ORDER BY ".$this->mDb->convertSortmode($sort_mode);
+*/
+  		$query = "SELECT wh.* 
+				$selectSql
+				FROM `".BIT_DB_PREFIX."warehouse_list` wh
+				ORDER BY ".$this->mDb->convertSortmode($sort_mode);
 		$result = $this->mDb->query( $query ,$bindVars ,$max_records ,$offset );
 
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$res['display_url'] = $this->getDisplayUrl( $res['content_id'] );
+			$res['display_url'] = WAREHOUSE_PKG_URL.'index.php?warehouse_id='.trim($res['warehouse']);
 			$ret[] = $res;
 		}
 
 		// Get total result count
-		$query_cant = "SELECT COUNT(wh.`warehouse`) FROM `".BIT_DB_PREFIX."warehouse_list` wh
-				INNER JOIN `".BIT_DB_PREFIX."liberty_content` lc ON ( lc.`content_id` = ir.`content_id` ) $joinSql
-				WHERE lc.`content_type_guid` = ? $whereSql";
+		$query_cant = "SELECT COUNT(wh.`warehouse`) FROM `".BIT_DB_PREFIX."warehouse_list` wh";
+//				INNER JOIN `".BIT_DB_PREFIX."liberty_content` lc ON ( lc.`content_id` = ir.`content_id` ) $joinSql
+//				WHERE lc.`content_type_guid` = ? $whereSql";
 		$pParamHash["cant"] = $this->mDb->getOne($query_cant, $bindVars);
 
 		// add all pagination info to pParamHash
@@ -330,16 +335,17 @@ class Warehouse extends LibertyContent {
 	* @return array List of client records filtered by warehouse
 	*/
 	function getClientList( $warehouse = NULL ) {
-		if ($warehouse) {
-			$mid = "WHERE `project_name` STARTING '$project'";
-		} else { $mid = ''; }
-		$query = "SELECT cl.* FROM `warehouse_client`
+//		if ($warehouse) {
+//			$mid = "WHERE `project_name` STARTING '$project'";
+//		} else 
+		{ $mid = ''; }
+		$query = "SELECT cl.* FROM `warehouse_client` cl
 				  $mid ORDER BY cl.`name`";
 		$result = $this->mDb->query($query);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$res['display_url'] = $this->getDisplayUrl( $res['content_id'] );
+			$res['display_url'] = WAREHOUSE_PKG_URL.'index.php?client_id='.trim($res['client']);
 			$ret[] = $res;
 		}
 
