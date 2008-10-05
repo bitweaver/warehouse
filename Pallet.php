@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: 
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Pallet.php,v 1.2 2008/10/05 09:10:53 lsces Exp $ 
  *
  * Copyright ( c ) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
