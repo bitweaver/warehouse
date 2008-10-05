@@ -34,7 +34,7 @@ $tables = array(
 	country C(15),
 	postcode C(8),
 	jrneyno C(16),
-	lastdate D,
+	lastdate T,
 	pricezone C(6),
 	defcarrier C(10),
 	defservice C(6),
@@ -147,12 +147,12 @@ $gBitInstaller->registerSchemaSequences( WAREHOUSE_PKG_NAME, $sequences );
 
 // ### Default Preferences
 $gBitInstaller->registerPreferences( WAREHOUSE_PKG_NAME, array(
-	array( WAREHOUSE_PKG_NAME, 'warehouse_list_title','y'),
-	array( WAREHOUSE_PKG_NAME, 'warehouse_list_created','y'),
-	array( WAREHOUSE_PKG_NAME, 'warehouse_list_user','y'),
-	array( WAREHOUSE_PKG_NAME, 'warehouse_list_hits','y'),
-	array( WAREHOUSE_PKG_NAME, 'warehouse_list_thumbnail','y'),
-	array( WAREHOUSE_PKG_NAME, 'warehouse_list_thumbnail_size','small'),
+	array( WAREHOUSE_PKG_NAME, 'warehouse_list_client','y'),
+	array( WAREHOUSE_PKG_NAME, 'warehouse_list_contact','y'),
+	array( WAREHOUSE_PKG_NAME, 'warehouse_list_pallet_cnt','y'),
+	array( WAREHOUSE_PKG_NAME, 'warehouse_list_warehouse','y'),
+	array( WAREHOUSE_PKG_NAME, 'warehouse_list_name','y'),
+	array( WAREHOUSE_PKG_NAME, 'warehouse_list_location','y'),
 	array( WAREHOUSE_PKG_NAME, 'warehouse_pallet_list_title','y'),
 	array( WAREHOUSE_PKG_NAME, 'warehouse_pallet_list_description','y'),
 	array( WAREHOUSE_PKG_NAME, 'warehouse_pallet_list_image_titles','y'),
