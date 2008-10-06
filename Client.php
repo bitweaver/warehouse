@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Client.php,v 1.1 2008/10/06 07:49:14 lsces Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Client.php,v 1.2 2008/10/06 08:55:25 lsces Exp $
  *
  * Copyright ( c ) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,7 +40,7 @@ class Client extends LibertyContent {
 				'handler_file' => 'Client.php',
 				'maintainer_url' => 'http://lsces.co.uk'
 			) );
-		$this->mClientId = (int)$pClientId;
+		$this->mClientId = $pClientId;
 		$this->mContentTypeGuid = CLIENT_CONTENT_TYPE_GUID;
 				// Permission setup
 		$this->mViewContentPerm  = 'p_warehouse_view';
@@ -368,7 +368,7 @@ class Client extends LibertyContent {
 			$bindVars[] = '%' . strtoupper( $find_postcode ). '%';
 			$pParamHash["listInfo"]["ihash"]["find_postcode"] = $find_postcode;
 		}
-/* Pull from Warehosue for present
+/* Pull from Warehose for present
 		$query = "SELECT c.*, a.UPRN, a.POSTCODE, a.SAO, a.PAO, a.NUMBER, a.STREET, a.LOCALITY, a.TOWN, a.COUNTY, c.parent_id as uprn,
 			(SELECT COUNT(*) FROM `".BIT_DB_PREFIX."citizen_xref` x WHERE x.content_id = c.content_id ) AS links, 
 			(SELECT COUNT(*) FROM `".BIT_DB_PREFIX."task_ticket` e WHERE e.usn = c.usn ) AS enquiries $selectSql 
@@ -396,7 +396,6 @@ class Client extends LibertyContent {
 		LibertyContent::postGetList( $pParamHash );
 		return $ret;
 	}
-
 
 	/**
 	 * loadClient( &$pParamHash );
@@ -454,6 +453,45 @@ class Client extends LibertyContent {
 		}
 		return( count( $this->mInfo ) );
 	}
+	
+	/**
+	* Returns clients using space in a Warehouse
+	* if no warehouse is specified, then a list of all clients is returned
+	*
+	* @param string filter to provide a subset of projects
+	* @return array List of client records filtered by warehouse
+	*/
+	function getStockList( $client = NULL ) {
+		$query = "SELECT stk.* FROM `warehouse_stock` stk
+				  JOIN `warehouse_partlist` pro ON stk.`partno` = pro.`partno`
+				  WHERE pro.`client` = ? ORDER BY stk.`partno`";
+		$result = $this->mDb->query($query, array( $client ));
+		$ret = array();
 
+		while ($res = $result->fetchRow()) {
+			$res['pallet_url'] = WAREHOUSE_PKG_URL.'display_pallet.php?pallet_id='.trim($res['pallet']);
+			$res['product_url'] = WAREHOUSE_PKG_URL.'display_product.php?product_id='.trim($res['partno']);
+			$res['subp'] = trim($res['subp']);
+			$ret[] = $res;
+		}
+
+		$this->mInfo['stock'] = $ret;
+		return $ret;
+	}
+	function getProductList( $client = NULL ) {
+		$query = "SELECT pro.* FROM `warehouse_partlist` pro
+				  WHERE `client` = ? ORDER BY pro.`partno`";
+		$result = $this->mDb->query($query, array( $client ));
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$res['product_url'] = WAREHOUSE_PKG_URL.'display_product.php?product_id='.trim($res['partno']);
+			$ret[] = $res;
+		}
+
+		$this->mInfo['product'] = $ret;
+		return $ret;
+	}
+	
 }
 ?>
