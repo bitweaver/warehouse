@@ -14,6 +14,7 @@ if( $gBitSystem->isPackageActive( 'warehouse' ) && $gBitUser->hasPermission( 'p_
 		'package_name'  => WAREHOUSE_PKG_NAME,
 		'index_url'     => WAREHOUSE_PKG_URL.'index.php',
 		'menu_template' => 'bitpackage:warehouse/menu_warehouse.tpl',
+		'admin_comments_url' => KERNEL_PKG_URL.'admin/index.php?page=warehouse',
 	);
 	$gBitSystem->registerAppMenu( $menuHash );
 
