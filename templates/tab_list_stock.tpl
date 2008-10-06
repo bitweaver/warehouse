@@ -12,8 +12,8 @@
 						<th>Product</th>
 						<th>Batch</th>
 						<th>Quantity</th>
-						<th>Hold</th>
 						<th>Open</th>
+						<th>Hold</th>
 						<th>Pallet Number</th>
 					</tr>
 				</thead>
@@ -33,10 +33,10 @@
 								{$clientInfo.stock[stock].qty|escape}
 							</td>
 							<td>
-								{$clientInfo.stock[stock].hold|escape}
+								{$clientInfo.stock[stock].sopen|escape}
 							</td>
 							<td>
-								{$clientInfo.stock[stock].sopen|escape}
+								{$clientInfo.stock[stock].hold|escape}
 							</td>
 							<td>
 								{$clientInfo.stock[stock].palletno|escape}
