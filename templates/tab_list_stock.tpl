@@ -1,41 +1,45 @@
 		{assign var=stkrefcnt value=$clientInfo.stock|@count}
-		{jstab title="Cross reference ($stkrefcnt)"}
+		{jstab title="Stock ($stkrefcnt)"}
 		{legend legend="Stock"}
 		<div class="row">
-			{formlabel label="Cross reference" for="stock"}
+			{formlabel label="Stock" for="stock"}
 			{forminput}
 			<table>
-				<caption>{tr}List of linked references{/tr}</caption>
+				<caption>{tr}List of current stock{/tr}</caption>
 				<thead>
 					<tr>
-						<th>Data</th>
-						<th>Application</th>
-						<th>USN</th>
-						<th>Reference</th>
+						<th>Location</th>
+						<th>Product</th>
+						<th>Batch</th>
+						<th>Quantity</th>
+						<th>Hold</th>
+						<th>Open</th>
+						<th>Pallet Number</th>
 					</tr>
 				</thead>
 				<tbody>
 					{section name=stock loop=$clientInfo.stock}
-						<tr class="{cycle values="even,odd"}" title="{$list[county].title|escape}">
+						<tr class="{cycle values="even,odd"}" title="{clientInfo.stock[stock].palletno|escape}">
 							<td>
-								{$clientInfo.stock[stock].last_update_date|bit_long_date}
+								<a title="{tr}pallet details{/tr}" href="{$clientInfo.stock[stock].pallet_url}">{$clientInfo.stock[stock].pallet}{if $clientInfo.stock[stock].subp ne ''}.{$clientInfo.stock[stock].subp}{/if}</a>
 							</td>
 							<td>
-								{$clientInfo.stock[stock].source|escape}
+								<a title="{tr}product details{/tr}" href="{$clientInfo.stock[stock].product_url}">{$clientInfo.stock[stock].partno|escape}</a>
 							</td>
 							<td>
-								{if isset($clientInfo.stock[stock].usn) && ($clientInfo.stock[stock].usn <> '') }
-									{$clientInfo.stock[stock].usn|escape}
-									{smartlink ititle="Link to" ifile="display_citizen.php" ibiticon="icons/accessories-text-editor" content_id=$clientInfo.stock[stock].usn}
-								{/if}
+								{$clientInfo.stock[stock].batch|escape}
 							</td>
 							<td>
-								<span class="actionicon">
-									{smartlink ititle="View" ifile="view_stock.php" ibiticon="icons/accessories-text-editor" source=$clientInfo.stock[stock].source stock=$clientInfo.stock[stock].cross_reference}
-								</span>
-								<label for="ev_{$clientInfo.stock[stock].cross_reference}">	
-									{$clientInfo.stock[stock].cross_reference}
-								</label>
+								{$clientInfo.stock[stock].qty|escape}
+							</td>
+							<td>
+								{$clientInfo.stock[stock].hold|escape}
+							</td>
+							<td>
+								{$clientInfo.stock[stock].sopen|escape}
+							</td>
+							<td>
+								{$clientInfo.stock[stock].palletno|escape}
 							</td>
 						</tr>
 					{sectionelse}

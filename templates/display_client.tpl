@@ -28,8 +28,8 @@
 		{* include file="bitpackage:warehouse/display_address.tpl" *}
 		{jstabs}
 			{include file="bitpackage:warehouse/tab_list_stock.tpl"}
-			{* include file="bitpackage:warehouse/list_ticket.tpl"}
-			{include file="bitpackage:warehouse/list_appoint.tpl" *}
+			{include file="bitpackage:warehouse/tab_list_products.tpl"}
+			{* include file="bitpackage:warehouse/list_appoint.tpl" *}
 		{/jstabs}
 	</div><!-- end .content -->
 </div><!-- end .body -->
