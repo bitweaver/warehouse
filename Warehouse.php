@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Warehouse.php,v 1.3 2008/10/05 09:10:53 lsces Exp $ 
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Warehouse.php,v 1.4 2008/10/06 08:54:11 lsces Exp $ 
  *
  * Copyright ( c ) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -345,7 +345,7 @@ class Warehouse extends LibertyContent {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$res['display_url'] = WAREHOUSE_PKG_URL.'index.php?client_id='.trim($res['client']);
+			$res['display_url'] = WAREHOUSE_PKG_URL.'display_client.php?client_id='.trim($res['client']);
 			$ret[] = $res;
 		}
 
