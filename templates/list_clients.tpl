@@ -35,7 +35,8 @@
 						{$client.contact}&nbsp;&nbsp;
 					{/if}
 						
-					{if $gBitSystem->isFeatureActive('warehouse_list_palletcnt' )}
+					{if $gBitSystem->isFeatureActive('warehouse_list_pallet_cnt' )}
+							{tr}Stock{/tr}: {$client.stock}&nbsp;&nbsp;
 							{tr}Full Pallets{/tr}: {$client.fullp}&nbsp;&nbsp;
 							{tr}Partial Pallets{/tr}: {$client.part}
 					{/if}

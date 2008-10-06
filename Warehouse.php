@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Warehouse.php,v 1.4 2008/10/06 08:54:11 lsces Exp $ 
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Warehouse.php,v 1.5 2008/10/06 14:52:43 lsces Exp $ 
  *
  * Copyright ( c ) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -339,7 +339,8 @@ class Warehouse extends LibertyContent {
 //			$mid = "WHERE `project_name` STARTING '$project'";
 //		} else 
 		{ $mid = ''; }
-		$query = "SELECT cl.* FROM `warehouse_client` cl
+		$query = "SELECT ( SELECT COUNT(PARTNO) FROM `warehouse_partlist` pro WHERE pro.`client` = cl.`client` AND pro.`quantity` > 0 ) AS `stock`, cl.*
+				 FROM `warehouse_client` cl WHERE (cl.`fullp` + cl.`part`) > 0
 				  $mid ORDER BY cl.`name`";
 		$result = $this->mDb->query($query);
 		$ret = array();
