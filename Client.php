@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Client.php,v 1.3 2008/10/06 09:13:05 lsces Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Client.php,v 1.4 2008/10/06 14:51:56 lsces Exp $
  *
  * Copyright ( c ) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -480,7 +480,7 @@ class Client extends LibertyContent {
 	}
 	function getProductList( $client = NULL ) {
 		$query = "SELECT pro.* FROM `warehouse_partlist` pro
-				  WHERE `client` = ? ORDER BY pro.`partno`";
+				  WHERE pro.`client` = ? AND pro.`quantity` > 0 ORDER BY pro.`partno`";
 		$result = $this->mDb->query($query, array( $client ));
 		$ret = array();
 
@@ -494,7 +494,7 @@ class Client extends LibertyContent {
 	}
 	function getBatchList( $client = NULL ) {
 		$query = "SELECT ba.* FROM `warehouse_batch` ba
-				  WHERE `client` = ? ORDER BY ba.`partno`, ba.`indate`";
+				  WHERE ba.`client` = ? AND ba.`qty` > 0 ORDER BY ba.`partno`, ba.`indate`";
 		$result = $this->mDb->query($query, array( $client ));
 		$ret = array();
 
