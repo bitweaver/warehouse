@@ -29,7 +29,7 @@
 		{jstabs}
 			{include file="bitpackage:warehouse/tab_list_stock.tpl"}
 			{include file="bitpackage:warehouse/tab_list_products.tpl"}
-			{* include file="bitpackage:warehouse/list_appoint.tpl" *}
+			{include file="bitpackage:warehouse/tab_list_batches.tpl"}
 		{/jstabs}
 	</div><!-- end .content -->
 </div><!-- end .body -->

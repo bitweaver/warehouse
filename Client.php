@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Client.php,v 1.2 2008/10/06 08:55:25 lsces Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Client.php,v 1.3 2008/10/06 09:13:05 lsces Exp $
  *
  * Copyright ( c ) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -490,6 +490,20 @@ class Client extends LibertyContent {
 		}
 
 		$this->mInfo['product'] = $ret;
+		return $ret;
+	}
+	function getBatchList( $client = NULL ) {
+		$query = "SELECT ba.* FROM `warehouse_batch` ba
+				  WHERE `client` = ? ORDER BY ba.`partno`, ba.`indate`";
+		$result = $this->mDb->query($query, array( $client ));
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$res['product_url'] = WAREHOUSE_PKG_URL.'display_product.php?product_id='.trim($res['partno']);
+			$ret[] = $res;
+		}
+
+		$this->mInfo['batch'] = $ret;
 		return $ret;
 	}
 	
