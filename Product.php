@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Product.php,v 1.2 2008/10/05 10:39:55 lsces Exp $ 
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Product.php,v 1.3 2008/10/08 10:46:42 lsces Exp $ 
  *
  * Copyright ( c ) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,7 +29,7 @@ class Product extends LibertyContent {
 	 * @param integer Warehouse identifer
 	 * @param integer Base content_id identifier 
 	 */
-	function allet( $pProductId = NULL, $pContentId = NULL ) {
+	function Product( $pProductId = NULL, $pContentId = NULL ) {
 		LibertyContent::LibertyContent();
 		$this->registerContentType( PRODUCT_CONTENT_TYPE_GUID, array(
 				'content_type_guid' => PRODUCT_CONTENT_TYPE_GUID,
@@ -51,7 +51,7 @@ class Product extends LibertyContent {
 	 */
 	function load($pContentId = NULL) {
 		if ( $pContentId ) $this->mContentId = (int)$pContentId;
-		if( @$this->verifyId( $this->mIRId ) || @$this->verifyId( $this->mContentId ) ) {
+/*		if( @$this->verifyId( $this->mIRId ) || @$this->verifyId( $this->mContentId ) ) {
 			$lookupColumn = @$this->verifyId( $this->mIRId ) ? 'ir_id' : 'content_id';
 
 			$bindVars = array(); $selectSql = ''; $joinSql = ''; $whereSql = '';
@@ -82,6 +82,15 @@ class Product extends LibertyContent {
 			}
 		}
 		LibertyContent::load();
+*/
+		$query = "SELECT pro.* FROM `warehouse_partlist` pro
+				  WHERE pro.`partno` = ?";
+		$result = $this->mDb->query($query, array( $this->mProductId ));
+			if ( $result && $result->numRows() ) {
+				$this->mInfo = $result->fields;
+				$this->mContentId = 0;
+				$this->mProductName = $result->fields['decript'];
+			}
 		return;
 	}
 
@@ -225,7 +234,7 @@ class Product extends LibertyContent {
 		$bindVars = array();
 // Need to tidy bind when LC setup is restored!
 //		array_push( $bindVars, $this->mContentTypeGuid );
-		$this->getServicesSql( 'content_list_sql_function', $selectSql, $joinSql, $whereSql, $bindVars );
+//		$this->getServicesSql( 'content_list_sql_function', $selectSql, $joinSql, $whereSql, $bindVars );
 
 		if ($client_id) {
 			$findesc = trim(strtoupper( $client_id ));
@@ -261,7 +270,7 @@ class Product extends LibertyContent {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$res['display_url'] = WAREHOUSE_PKG_URL.'product.php?product_id='.trim($res['partno']);
+			$res['display_url'] = WAREHOUSE_PKG_URL.'display_product.php?product_id='.trim($res['partno']);
 			$ret[] = $res;
 		}
 
@@ -276,5 +285,60 @@ class Product extends LibertyContent {
 		LibertyContent::postGetList( $pParamHash );
 		return $ret;
 	}
+
+	/**
+	* Returns clients using space in a Warehouse
+	* if no warehouse is specified, then a list of all clients is returned
+	*
+	* @param string filter to provide a subset of projects
+	* @return array List of client records filtered by warehouse
+	*/
+	function getStockList( $product = NULL ) {
+		$query = "SELECT stk.* FROM `warehouse_stock` stk
+				  WHERE stk.`partno` = ? ORDER BY stk.`palletno` DESC";
+		$result = $this->mDb->query($query, array( $product ));
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$res['pallet_url'] = WAREHOUSE_PKG_URL.'display_pallet.php?pallet_id='.trim($res['pallet']);
+			$res['subp'] = trim($res['subp']);
+			$ret[] = $res;
+		}
+
+		$this->mInfo['stock'] = $ret;
+		return $ret;
+	}
+	function getPalletMoveList( $product = NULL ) {
+		$query = "SELECT sm.*, rel.`rdate` FROM `warehouse_stockmove` sm
+				  JOIN `warehouse_releases` rel ON rel.`release_no` = sm.`release_no` AND rel.`partno` = sm.`partno` AND rel.`batch` = sm.`batch`
+				  WHERE sm.`partno` = ? ORDER BY sm.`audit` DESC";
+		$result = $this->mDb->query($query, array( $product ));
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$res['pallet_url'] = WAREHOUSE_PKG_URL.'display_pallet.php?pallet_no='.trim($res['palletno']);
+			$res['batch_url'] = WAREHOUSE_PKG_URL.'display_batch.php?batch_id='.trim($res['batch']);
+			$ret[] = $res;
+		}
+
+		$this->mInfo['move'] = $ret;
+		return $ret;
+	}
+	function getBatchList( $product = NULL ) {
+		$query = "SELECT ba.* FROM `warehouse_batch` ba
+				  WHERE ba.`partno` = ? ORDER BY ba.`indate` DESC";
+		$result = $this->mDb->query($query, array( $product ));
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$res['pallet_url'] = WAREHOUSE_PKG_URL.'display_pallet.php?pallet_no='.trim($res['palletno']);
+			$res['batch_url'] = WAREHOUSE_PKG_URL.'display_batch.php?batch_id='.trim($res['batch']);
+			$ret[] = $res;
+		}
+		$this->mInfo['batch'] = $ret;
+		return $ret;
+	}
+
+
 }
 ?>
