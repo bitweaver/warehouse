@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Pallet.php,v 1.3 2008/10/08 09:56:45 lsces Exp $ 
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Pallet.php,v 1.4 2008/10/08 10:05:07 lsces Exp $ 
  *
  * Copyright ( c ) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -51,7 +51,7 @@ class Pallet extends LibertyContent {
 	 */
 	function load($pContentId = NULL) {
 		if ( $pContentId ) $this->mContentId = (int)$pContentId;
-		if( @$this->verifyId( $this->mIRId ) || @$this->verifyId( $this->mContentId ) ) {
+/*		if( @$this->verifyId( $this->mIRId ) || @$this->verifyId( $this->mContentId ) ) {
 			$lookupColumn = @$this->verifyId( $this->mIRId ) ? 'ir_id' : 'content_id';
 
 			$bindVars = array(); $selectSql = ''; $joinSql = ''; $whereSql = '';
@@ -82,6 +82,15 @@ class Pallet extends LibertyContent {
 			}
 		}
 		LibertyContent::load();
+ */
+		$query = "SELECT pal.* FROM `warehouse_pallet` pal
+				  WHERE pal.`pallet` = ?";
+		$result = $this->mDb->query($query, array( $this->mPalletId ));
+			if ( $result && $result->numRows() ) {
+				$this->mInfo = $result->fields;
+				$this->mContentId = 0;
+				$this->mPalletName = $result->fields['pallet'];
+			}
 		return;
 	}
 

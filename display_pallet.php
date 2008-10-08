@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/bitweaver/_bit_warehouse/display_pallet.php,v 1.1 2008/10/08 09:56:45 lsces Exp $
+ * $Header: /cvsroot/bitweaver/_bit_warehouse/display_pallet.php,v 1.2 2008/10/08 10:05:07 lsces Exp $
  *
  * Copyright (c) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -23,7 +23,7 @@ $gBitSystem->verifyPermission( 'p_warehouse_view' );
 
 if( !empty( $_REQUEST['pallet_id'] ) ) {
 	$gPallet = new Pallet($_REQUEST['pallet_id'],$_REQUEST['content_id']);
-//	$gPallet->load();
+	$gPallet->load();
 } else {
 	$gPallet = new Pallet();
 }
