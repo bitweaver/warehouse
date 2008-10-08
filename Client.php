@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Client.php,v 1.5 2008/10/08 06:58:17 lsces Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Client.php,v 1.6 2008/10/08 07:37:43 lsces Exp $
  *
  * Copyright ( c ) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -56,7 +56,7 @@ class Client extends LibertyContent {
 	 */
 	function load($pContentId = NULL) {
 		if ( $pContentId ) $this->mContentId = (int)$pContentId;
-		if( $this->verifyId( $this->mContentId ) ) {
+/*		if( $this->verifyId( $this->mContentId ) ) {
 			$query = "select con.*, lc.*,
 				uue.`login` AS modifier_user, uue.`real_name` AS modifier_real_name,
 				uuc.`login` AS creator_user, uuc.`real_name` AS creator_real_name
@@ -79,6 +79,19 @@ class Client extends LibertyContent {
 			}
 		}
 		LibertyAttachable::load();
+*/
+			$query = "select cl.*, cu.*
+				FROM `".BIT_DB_PREFIX."warehouse_client` cl
+				LEFT JOIN `".BIT_DB_PREFIX."warehouse_customer` cu ON (cl.`client` = cu.`client`)
+				WHERE cl.`client`=?";
+			$result = $this->mDb->query( $query, array( $this->mClientId ) );
+
+			if ( $result && $result->numRows() ) {
+				$this->mInfo = $result->fields;
+				$this->mContentId = 0;
+				$this->mClientName = $result->fields['name'];
+//				$this->mInfo['display_url'] = $this->getDisplayUrl();
+		}
 		return;
 	}
 
@@ -397,63 +410,6 @@ class Client extends LibertyContent {
 		return $ret;
 	}
 
-	/**
-	 * loadClient( &$pParamHash );
-	 * Get citizen record 
-	 */
-	function loadClient( &$pParamHash = NULL ) {
-		if( $this->isValid() ) {
-		$sql = "SELECT c.*, a.*, n.*, p.*
-			FROM `".BIT_DB_PREFIX."citizen` ci 
-			LEFT JOIN `".BIT_DB_PREFIX."address_book` a ON a.usn = ci.usn
-			LEFT JOIN `".BIT_DB_PREFIX."nlpg_blpu` n ON n.`uprn` = ci.`nlpg`
-			LEFT JOIN `".BIT_DB_PREFIX."nlpg_lpi` p ON p.`uprn` = ci.`nlpg` AND p.`language` = 'ENG' AND p.`logical_status` = 1
-			WHERE ci.`content_id` = ?";
-			if( $rs = $this->mDb->query( $sql, array( $this->mContentId ) ) ) {
-				if(	$this->mInfo = $rs->fields ) {
-/*					if(	$this->mInfo['local_custodian_code'] == 0 ) {
-						global $gBitSystem;
-						$gBitSystem->fatalError( tra( 'You do not have permission to access this client record' ), 'error.tpl', tra( 'Permission denied.' ) );
-					}
-*/
-
-					$sql = "SELECT x.`last_update_date`, x.`source`, x.`cross_reference`, 
-							CASE
-							WHEN x.`source` = 'POSTFIELD' THEN (SELECT `USN` FROM `".BIT_DB_PREFIX."caller` c WHERE c.`caller_id` = x.`cross_reference`)
-							ELSE '' END AS USN 
-							FROM `".BIT_DB_PREFIX."citizen_xref` x
-							WHERE x.content_id = ?";
-
-					$result = $this->mDb->query( $sql, array( $this->mContentId ) );
-
-					while( $res = $result->fetchRow() ) {
-						$this->mInfo['xref'][] = $res;
-						if ( $res['source'] == 'POSTFIELD' ) $ticket[] = $res['cross_reference'];
-					}
-					if ( isset( $ticket ) )
-					{ $sql = "SELECT t.* FROM `".BIT_DB_PREFIX."task_ticket` t 
-							WHERE t.caller_id IN(". implode(',', array_fill(0, count($ticket), '?')) ." )";
-						$result = $this->mDb->query( $sql, $ticket );
-						while( $res = $result->fetchRow() ) {
-							$this->mInfo['tickets'][] = $res;
-						}
-					}
-					$os1 = new OSRef($this->mInfo['x_coordinate'], $this->mInfo['y_coordinate']);
-					$ll1 = $os1->toLatLng();
-					$this->mInfo['prop_lat'] = $ll1->lat;
-					$this->mInfo['prop_lng'] = $ll1->lng;
-//					$this->mInfo['display_usrn'] = $this->getUsrnEntryUrl( $this->mInfo['usrn'] );
-//					$this->mInfo['display_uprn'] = $this->getUprnEntryUrl( $this->mInfo['uprn'] );
-//vd($this->mInfo);
-				} else {
-					global $gBitSystem;
-					$gBitSystem->fatalError( tra( 'Client record does not exist' ), 'error.tpl', tra( 'Not found.' ) );
-				}
-			}
-		}
-		return( count( $this->mInfo ) );
-	}
-	
 	/**
 	* Returns clients using space in a Warehouse
 	* if no warehouse is specified, then a list of all clients is returned

@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/bitweaver/_bit_warehouse/display_client.php,v 1.4 2008/10/08 06:58:17 lsces Exp $
+ * $Header: /cvsroot/bitweaver/_bit_warehouse/display_client.php,v 1.5 2008/10/08 07:37:43 lsces Exp $
  *
  * Copyright (c) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -23,10 +23,11 @@ $gBitSystem->verifyPermission( 'p_warehouse_view' );
 
 if( !empty( $_REQUEST['client_id'] ) ) {
 	$gClient = new Client($_REQUEST['client_id'],$_REQUEST['content_id']);
-	$gClient->loadClient();
+	$gClient->load();
 } else {
 	$gClient = new Client();
 }
+
 $gClient->getStockList($gClient->mClientId);
 $gClient->getProductList($gClient->mClientId);
 $gClient->getBatchList($gClient->mClientId);

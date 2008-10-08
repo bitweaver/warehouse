@@ -1,27 +1,27 @@
 <div class="body">
 	<div class="content">
 
-		{if isset($clientInfo.organisation) && ($clientInfo.organisation <> '') }
+		{if isset($clientInfo.name) && ($clientInfo.name <> '') }
 		<div class="row">
-			{formlabel label="Organisation" for="organisation"}
+			{formlabel label="Name" for="name"}
 			{forminput}
-				{$clientInfo.organisation|escape} 
+				{$clientInfo.name|escape} 
 			{/forminput}
 		</div>
 		{/if}
-		{if isset($clientInfo.dob) && ($clientInfo.dob <> '') }
+		{if isset($clientInfo.address1) && ($clientInfo.address1 <> '') }
 		<div class="row">
-			{formlabel label="Date of Birth" for="dob"}
+			{formlabel label="Address" for="address"}
 			{forminput}
-				{$clientInfo.dob|bit_long_date}
+				{$clientInfo.address1|escape},{$clientInfo.address2|escape},{$clientInfo.posttown|escape},{$clientInfo.county|escape},{$clientInfo.postcode|escape}
 			{/forminput}
 		</div>
 		{/if}
-		{if isset($clientInfo.nino) && ($clientInfo.nino <> '') }
+		{if isset($clientInfo.contact) && ($clientInfo.contact <> '') }
 		<div class="row">
-			{formlabel label="National Insurance Number" for="nino"}
+			{formlabel label="Contact" for="contact"}
 			{forminput}
-				{$clientInfo.nino|escape}
+				{$clientInfo.contact|escape}
 			{/forminput}
 		</div>
 		{/if}
