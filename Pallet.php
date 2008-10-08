@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Pallet.php,v 1.2 2008/10/05 09:10:53 lsces Exp $ 
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Pallet.php,v 1.3 2008/10/08 09:56:45 lsces Exp $ 
  *
  * Copyright ( c ) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,7 +29,7 @@ class Pallet extends LibertyContent {
 	 * @param integer Warehouse identifer
 	 * @param integer Base content_id identifier 
 	 */
-	function allet( $pPalletId = NULL, $pContentId = NULL ) {
+	function Pallet( $pPalletId = NULL, $pContentId = NULL ) {
 		LibertyContent::LibertyContent();
 		$this->registerContentType( PALLET_CONTENT_TYPE_GUID, array(
 				'content_type_guid' => PALLET_CONTENT_TYPE_GUID,
@@ -267,5 +267,66 @@ class Pallet extends LibertyContent {
 		LibertyContent::postGetList( $pParamHash );
 		return $ret;
 	}
+
+	/**
+	* Returns clients using space in a Warehouse
+	* if no warehouse is specified, then a list of all clients is returned
+	*
+	* @param string filter to provide a subset of projects
+	* @return array List of client records filtered by warehouse
+	*/
+	function getStockList( $pallet = NULL ) {
+		$query = "SELECT stk.* FROM `warehouse_stock` stk
+				  JOIN `warehouse_partlist` pro ON pro.`partno` = stk.`partno`
+				  WHERE stk.`pallet` = ? ORDER BY stk.`partno`";
+		$result = $this->mDb->query($query, array( $pallet ));
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$res['pallet_url'] = WAREHOUSE_PKG_URL.'display_pallet.php?pallet_id='.trim($res['pallet']);
+			$res['product_url'] = WAREHOUSE_PKG_URL.'display_product.php?product_id='.trim($res['partno']);
+			$res['subp'] = trim($res['subp']);
+			$ret[] = $res;
+		}
+
+		$this->mInfo['stock'] = $ret;
+		return $ret;
+	}
+	function getToPalletList( $pallet = NULL ) {
+		$query = "SELECT sm.*, pro.*, rel.`rdate` FROM `warehouse_stockmove` sm
+				  JOIN `warehouse_partlist` pro ON pro.`partno` = sm.`partno`
+				  JOIN `warehouse_releases` rel ON rel.`release_no` = sm.`release_no` AND rel.`partno` = sm.`partno` AND rel.`batch` = sm.`batch`
+				  WHERE sm.`top` = ? ORDER BY sm.`audit` DESC";
+		$result = $this->mDb->query($query, array( $pallet ));
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$res['pallet_url'] = WAREHOUSE_PKG_URL.'display_pallet.php?pallet_no='.trim($res['palletno']);
+			$res['product_url'] = WAREHOUSE_PKG_URL.'display_product.php?product_id='.trim($res['partno']);
+			$res['batch_url'] = WAREHOUSE_PKG_URL.'display_batch.php?batch_id='.trim($res['batch']);
+			$ret[] = $res;
+		}
+
+		$this->mInfo['top'] = $ret;
+		return $ret;
+	}
+	function getFromPalletList( $pallet = NULL ) {
+		$query = "SELECT sm.*, pro.*, rel.`rdate` FROM `warehouse_stockmove` sm
+				  JOIN `warehouse_partlist` pro ON pro.`partno` = sm.`partno`
+				  JOIN `warehouse_releases` rel ON rel.`release_no` = sm.`release_no` AND rel.`partno` = sm.`partno` AND rel.`batch` = sm.`batch`
+				  WHERE sm.`fromp` = ? ORDER BY sm.`audit` DESC";
+		$result = $this->mDb->query($query, array( $pallet ));
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$res['pallet_url'] = WAREHOUSE_PKG_URL.'display_pallet.php?pallet_no='.trim($res['palletno']);
+			$res['product_url'] = WAREHOUSE_PKG_URL.'display_product.php?product_id='.trim($res['partno']);
+			$res['batch_url'] = WAREHOUSE_PKG_URL.'display_batch.php?batch_id='.trim($res['batch']);
+			$ret[] = $res;
+		}
+		$this->mInfo['fromp'] = $ret;
+		return $ret;
+	}
+
 }
 ?>
