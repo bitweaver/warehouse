@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Client.php,v 1.8 2008/10/08 12:25:37 lsces Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Client.php,v 1.9 2008/10/08 12:29:01 lsces Exp $
  *
  * Copyright ( c ) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -427,6 +427,7 @@ class Client extends LibertyContent {
 		while ($res = $result->fetchRow()) {
 			$res['pallet_url'] = WAREHOUSE_PKG_URL.'display_pallet.php?pallet_id='.trim($res['pallet']);
 			$res['product_url'] = WAREHOUSE_PKG_URL.'display_product.php?product_id='.trim($res['partno']);
+			$res['batch_url'] = WAREHOUSE_PKG_URL.'display_batch.php?product_id='.trim($res['partno']).'&product_id='.trim($res['partno']);
 			$res['subp'] = trim($res['subp']);
 			$ret[] = $res;
 		}
