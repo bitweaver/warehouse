@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Client.php,v 1.6 2008/10/08 07:37:43 lsces Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Client.php,v 1.7 2008/10/08 11:24:04 lsces Exp $
  *
  * Copyright ( c ) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -478,6 +478,25 @@ class Client extends LibertyContent {
 		}
 
 		$this->mInfo['release'] = $ret;
+		return $ret;
+	}
+	function getRelease( $release = NULL ) {
+		$query = "SELECT rel.*
+				FROM WAREHOUSE_RELEASES rel
+				WHERE `release_no` = ?
+				ORDER BY rel.`lineno`";
+		$result = $this->mDb->query($query, array( $release ));
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$res['product_url'] = WAREHOUSE_PKG_URL.'display_product.php?product_id='.trim($res['partno']);
+			$ret[] = $res;
+		}
+
+		if ( $ret[0]['client'] <> $this->mClientId ) $this->mClientId = $ret[0]['client'];
+		$this->mInfo['release_no'] = $release;
+		$this->mInfo['release_date'] = $ret[0]['rdate'];
+		$this->mInfo['releaseno'] = $ret;
 		return $ret;
 	}
 

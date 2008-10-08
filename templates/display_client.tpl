@@ -25,12 +25,5 @@
 			{/forminput}
 		</div>
 		{/if}
-		{* include file="bitpackage:warehouse/display_address.tpl" *}
-		{jstabs}
-			{include file="bitpackage:warehouse/tab_list_stock.tpl"}
-			{include file="bitpackage:warehouse/tab_list_products.tpl"}
-			{include file="bitpackage:warehouse/tab_list_batches.tpl"}
-			{include file="bitpackage:warehouse/tab_list_releases.tpl"}
-		{/jstabs}
 	</div><!-- end .content -->
 </div><!-- end .body -->
