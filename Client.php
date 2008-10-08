@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Client.php,v 1.7 2008/10/08 11:24:04 lsces Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Client.php,v 1.8 2008/10/08 12:25:37 lsces Exp $
  *
  * Copyright ( c ) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -90,7 +90,7 @@ class Client extends LibertyContent {
 				$this->mInfo = $result->fields;
 				$this->mContentId = 0;
 				$this->mClientName = $result->fields['name'];
-//				$this->mInfo['display_url'] = $this->getDisplayUrl();
+				$this->mInfo['display_url'] = WAREHOUSE_PKG_URL.'display_client.php?client_id='.trim($this->mClientId);
 		}
 		return;
 	}
@@ -456,6 +456,7 @@ class Client extends LibertyContent {
 
 		while ($res = $result->fetchRow()) {
 			$res['product_url'] = WAREHOUSE_PKG_URL.'display_product.php?product_id='.trim($res['partno']);
+			$res['batch_url'] = WAREHOUSE_PKG_URL.'display_batch.php?batch_id='.trim($res['batch']).'&product_id='.trim($res['partno']);
 			$ret[] = $res;
 		}
 
@@ -490,6 +491,7 @@ class Client extends LibertyContent {
 
 		while ($res = $result->fetchRow()) {
 			$res['product_url'] = WAREHOUSE_PKG_URL.'display_product.php?product_id='.trim($res['partno']);
+			$res['batch_url'] = WAREHOUSE_PKG_URL.'display_batch.php?batch_id='.trim($res['batch']).'&product_id='.trim($res['partno']);
 			$ret[] = $res;
 		}
 

@@ -1,6 +1,3 @@
-<div class="body">
-	<div class="content">
-
 		{if isset($clientInfo.name) && ($clientInfo.name <> '') }
 		<div class="row">
 			{formlabel label="Name" for="name"}
@@ -25,5 +22,3 @@
 			{/forminput}
 		</div>
 		{/if}
-	</div><!-- end .content -->
-</div><!-- end .body -->

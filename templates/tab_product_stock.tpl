@@ -23,7 +23,7 @@
 								<a title="{tr}pallet details{/tr}" href="{$productInfo.stock[stock].pallet_url}">{$productInfo.stock[stock].pallet}{if $productInfo.stock[stock].subp ne ''}.{$productInfo.stock[stock].subp}{/if}</a>
 							</td>
 							<td>
-								{$productInfo.stock[stock].batch|escape}
+								<a title="{tr}batch details{/tr}" href="{$productInfo.stock[stock].batch_url}">{$productInfo.stock[stock].batch|escape}</a>
 							</td>
 							<td>
 								{$productInfo.stock[stock].qty|escape}

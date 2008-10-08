@@ -31,7 +31,7 @@
 								<a title="{tr}product details{/tr}" href="{$clientInfo.releaseno[releaseno].product_url}">{$clientInfo.releaseno[releaseno].partno}</a>
 							</td>
 							<td>
-								{$clientInfo.releaseno[releaseno].batch|escape}
+								<a title="{tr}batch details{/tr}" href="{$clientInfo.releaseno[releaseno].batch_url}">{$clientInfo.releaseno[releaseno].batch|escape}</a>
 							</td>
 							<td>
 								{$clientInfo.releaseno[releaseno].qty|escape}

@@ -29,13 +29,13 @@
 								<a title="{tr}product details{/tr}" href="{$palletInfo.fromp[fromp].product_url}">{$palletInfo.fromp[fromp].partno|escape}</a> - {$palletInfo.fromp[fromp].descript|escape}
 							</td>
 							<td>
-								{$palletInfo.fromp[fromp].batch|escape}
+								<a title="{tr}batch details{/tr}" href="{$palletInfo.fromp[fromp].batch_url}">{$palletInfo.fromp[fromp].batch|escape}</a>
 							</td>
 							<td>
 								{$palletInfo.fromp[fromp].qty|escape}
 							</td>
 							<td>
-								{$palletInfo.top[fromp].fromp|escape}.{$palletInfo.fromp[fromp].tosubp|escape}
+								{$palletInfo.fromp[fromp].fromp|escape}{if $productInfo.fromp[fromp].fromsubp ne ''}.{$productInfo.fromp[fromp].fromsubp}{/if}
 							</td>
 							<td>
 								{$palletInfo.fromp[fromp].cof|escape}

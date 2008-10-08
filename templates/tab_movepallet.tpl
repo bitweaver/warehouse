@@ -30,16 +30,16 @@
 								<a title="{tr}product details{/tr}" href="{$productInfo.move[move].product_url}">{$productInfo.move[move].partno|escape}</a> - {$productInfo.move[move].descript|escape}
 							</td>
 							<td>
-								{$productInfo.move[move].batch|escape}
+								<a title="{tr}batch details{/tr}" href="{$productInfo.move[move].batch_url}">{$productInfo.move[move].batch|escape}</a>
 							</td>
 							<td>
 								{$productInfo.move[move].qty|escape}
 							</td>
 							<td>
-								{$productInfo.move[move].fromp|escape}.{$productInfo.move[move].fromsubp|escape}
+								{$productInfo.move[move].fromp|escape}{if $productInfo.move[move].fromsubp ne ''}.{$productInfo.move[move].fromsubp}{/if}
 							</td>
 							<td>
-								{$productInfo.move[move].top|escape}.{$productInfo.move[move].tosubp|escape}
+								{$productInfo.move[move].top|escape}{if $productInfo.move[move].tosubp ne ''}.{$productInfo.move[move].tosubp}{/if}
 							</td>
 							<td>
 								{$productInfo.move[move].cof|escape}

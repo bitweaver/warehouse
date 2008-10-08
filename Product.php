@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Product.php,v 1.3 2008/10/08 10:46:42 lsces Exp $ 
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Product.php,v 1.4 2008/10/08 12:25:37 lsces Exp $ 
  *
  * Copyright ( c ) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -317,7 +317,9 @@ class Product extends LibertyContent {
 
 		while ($res = $result->fetchRow()) {
 			$res['pallet_url'] = WAREHOUSE_PKG_URL.'display_pallet.php?pallet_no='.trim($res['palletno']);
-			$res['batch_url'] = WAREHOUSE_PKG_URL.'display_batch.php?batch_id='.trim($res['batch']);
+			$res['batch_url'] = WAREHOUSE_PKG_URL.'display_batch.php?batch_id='.trim($res['batch']).'&product_id='.trim($res['partno']);
+			$res['fromsubp'] = trim($res['fromsubp']);
+			$res['tosubp'] = trim($res['tosubp']);
 			$ret[] = $res;
 		}
 
@@ -332,10 +334,29 @@ class Product extends LibertyContent {
 
 		while ($res = $result->fetchRow()) {
 			$res['pallet_url'] = WAREHOUSE_PKG_URL.'display_pallet.php?pallet_no='.trim($res['palletno']);
-			$res['batch_url'] = WAREHOUSE_PKG_URL.'display_batch.php?batch_id='.trim($res['batch']);
+			$res['batch_url'] = WAREHOUSE_PKG_URL.'display_batch.php?batch_id='.trim($res['batch']).'&product_id='.trim($res['partno']);
 			$ret[] = $res;
 		}
 		$this->mInfo['batch'] = $ret;
+		return $ret;
+	}
+	function getBatch( $product = NULL, $batch = NULL ) {
+		$query = "SELECT sm.*, rel.`rdate` FROM `warehouse_stockmove` sm
+				  JOIN `warehouse_releases` rel ON rel.`release_no` = sm.`release_no` AND rel.`partno` = sm.`partno` AND rel.`batch` = sm.`batch`
+				  WHERE sm.`partno` = ? AND sm.`batch` = ?ORDER BY sm.`audit` DESC";
+		$result = $this->mDb->query($query, array( $product, $batch ));
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$res['release_url'] = WAREHOUSE_PKG_URL.'display_release.php?release_id='.trim($res['release_no']);
+			$res['fromsubp'] = trim($res['fromsubp']);
+			$res['tosubp'] = trim($res['tosubp']);
+			$ret[] = $res;
+		}
+
+		$this->mInfo['batch_no'] = $batch;
+		$this->mInfo['batch_date'] = $ret[0]['indate'];
+		$this->mInfo['batchmove'] = $ret;
 		return $ret;
 	}
 

@@ -27,7 +27,7 @@
 								<a title="{tr}product details{/tr}" href="{$palletInfo.stock[stock].product_url}">{$palletInfo.stock[stock].partno|escape}</a>
 							</td>
 							<td>
-								{$palletInfo.stock[stock].batch|escape}
+								<a title="{tr}batch details{/tr}" href="{$palletInfo.stock[stock].batch_url}">{$palletInfo.stock[stock].batch|escape}</a>
 							</td>
 							<td>
 								{$palletInfo.stock[stock].qty|escape}

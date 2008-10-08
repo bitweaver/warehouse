@@ -20,7 +20,7 @@
 					{section name=batch loop=$productInfo.batch}
 						<tr class="{cycle values="even,odd"}" title="{$productInfo.batch[batch].partno|escape}">
 							<td>
-								{$productInfo.batch[batch].batch|escape}
+								<a title="{tr}batch details{/tr}" href="{$palletInfo.batch[batch].batch_url}">{$productInfo.batch[batch].batch|escape}</a>
 							</td>
 							<td>
 								{$productInfo.batch[batch].indate|bit_short_date}

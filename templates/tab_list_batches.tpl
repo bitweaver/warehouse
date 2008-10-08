@@ -24,7 +24,7 @@
 								<a title="{tr}product details{/tr}" href="{$clientInfo.batch[batch].product_url}">{$clientInfo.batch[batch].partno}</a>
 							</td>
 							<td>
-								{$clientInfo.batch[batch].batch|escape}
+								<a title="{tr}batch details{/tr}" href="{$clientInfo.batch[batch].batch_url}">{$clientInfo.batch[batch].batch|escape}</a>
 							</td>
 							<td>
 								{$clientInfo.batch[batch].indate|bit_short_date}
