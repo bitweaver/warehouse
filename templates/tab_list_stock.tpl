@@ -19,7 +19,7 @@
 				</thead>
 				<tbody>
 					{section name=stock loop=$clientInfo.stock}
-						<tr class="{cycle values="even,odd"}" title="{clientInfo.stock[stock].palletno|escape}">
+						<tr class="{cycle values="even,odd"}" title="{$clientInfo.stock[stock].palletno|escape}">
 							<td>
 								<a title="{tr}pallet details{/tr}" href="{$clientInfo.stock[stock].pallet_url}">{$clientInfo.stock[stock].pallet}{if $clientInfo.stock[stock].subp ne ''}.{$clientInfo.stock[stock].subp}{/if}</a>
 							</td>
