@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/list_products.php,v 1.1 2008/10/05 09:51:09 lsces Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/list_products.php,v 1.2 2008/10/08 06:56:57 lsces Exp $
  * @package warehouse
  * @subpackage functions
  */
@@ -9,6 +9,11 @@
  * required setup
  */
 require_once( '../bit_setup_inc.php' );
+
+$gBitSystem->verifyPackage( 'warehouse' );
+if ( !$gBitUser->hasUserPermission('p_warehouse_view') ) {
+	$gBitSystem->fatalError( 'You do not have prermission to view this package' );
+}
 
 require_once( WAREHOUSE_PKG_PATH.'Product.php');
 global $gBitSystem, $gBitSmarty;
