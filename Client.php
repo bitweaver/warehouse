@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Client.php,v 1.4 2008/10/06 14:51:56 lsces Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Client.php,v 1.5 2008/10/08 06:58:17 lsces Exp $
  *
  * Copyright ( c ) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -506,6 +506,24 @@ class Client extends LibertyContent {
 		$this->mInfo['batch'] = $ret;
 		return $ret;
 	}
-	
+	function getReleaseList( $client = NULL ) {
+		$query = "SELECT FIRST 50 DISTINCT a.`release_no`
+				, ( SELECT FIRST 1 RDATE FROM WAREHOUSE_RELEASES b WHERE b.RELEASE_NO = a.RELEASE_NO ) AS RDATE
+				, ( SELECT COUNT(c.LINENO) FROM WAREHOUSE_RELEASES c WHERE c.RELEASE_NO = a.RELEASE_NO ) AS LINES
+				FROM WAREHOUSE_RELEASES a
+				WHERE CLIENT = ?
+				ORDER BY 2 DESC";
+		$result = $this->mDb->query($query, array( $client ));
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$res['release_url'] = WAREHOUSE_PKG_URL.'display_release.php?release_id='.trim($res['release_no']);
+			$ret[] = $res;
+		}
+
+		$this->mInfo['release'] = $ret;
+		return $ret;
+	}
+
 }
 ?>
