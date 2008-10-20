@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Client.php,v 1.9 2008/10/08 12:29:01 lsces Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Client.php,v 1.10 2008/10/20 21:40:12 spiderr Exp $
  *
  * Copyright ( c ) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -44,7 +44,7 @@ class Client extends LibertyContent {
 		$this->mContentTypeGuid = CLIENT_CONTENT_TYPE_GUID;
 				// Permission setup
 		$this->mViewContentPerm  = 'p_warehouse_view';
-		$this->mEditContentPerm  = 'p_warehouse_edit';
+		$this->mUpdateContentPerm  = 'p_warehouse_edit';
 		$this->mAdminContentPerm = 'p_warehouse_admin';
 		
 	}
