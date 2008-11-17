@@ -164,9 +164,9 @@ $gBitInstaller->registerPreferences( WAREHOUSE_PKG_NAME, array(
 // ### Default User Permissions
 $gBitInstaller->registerUserPermissions( WAREHOUSE_PKG_NAME, array(
 	array('p_warehouse_view', 'Can view warehouse information', 'basic', WAREHOUSE_PKG_NAME),
-	array('p_warehouse_create', 'Can create a pallet location', 'registered', WAREHOUSE_PKG_NAME),
-	array('p_warehouse_edit', 'Can edit a pallet location', 'registered', WAREHOUSE_PKG_NAME),
-	array('p_warehouse_upload', 'Can upload pallets to a warehouse', 'registered', WAREHOUSE_PKG_NAME),
+	array('p_warehouse_create', 'Can create a pallet location', 'editors', WAREHOUSE_PKG_NAME),
+	array('p_warehouse_update', 'Can edit a pallet location', 'registered', WAREHOUSE_PKG_NAME),
+	array('p_warehouse_upload', 'Can upload pallets to a warehouse', 'editors', WAREHOUSE_PKG_NAME),
 	array('p_warehouse_admin', 'Can admin pallet movements', 'editors', WAREHOUSE_PKG_NAME),
 ) );
 
