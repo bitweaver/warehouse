@@ -1,10 +1,10 @@
 <?php
 /**
- * $Header: /cvsroot/bitweaver/_bit_warehouse/display_client.php,v 1.5 2008/10/08 07:37:43 lsces Exp $
+ * $Header: /cvsroot/bitweaver/_bit_warehouse/display_client.php,v 1.6 2009/10/01 13:45:53 wjames5 Exp $
  *
  * Copyright (c) 2006 bitweaver.org
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
- * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See http://www.gnu.org/copyleft/lesser.html for details.
  *
  * @package warehouse
  * @subpackage functions
