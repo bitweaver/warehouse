@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/list_pallets.php,v 1.2 2008/10/08 06:56:57 lsces Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/list_pallets.php,v 1.3 2010/02/08 21:27:27 wjames5 Exp $
  * @package warehouse
  * @subpackage functions
  */
@@ -8,7 +8,7 @@
 /**
  * required setup
  */
-require_once( '../bit_setup_inc.php' );
+require_once( '../kernel/setup_inc.php' );
 
 $gBitSystem->verifyPackage( 'warehouse' );
 if ( !$gBitUser->hasUserPermission('p_warehouse_view') ) {
