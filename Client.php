@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Client.php,v 1.12 2009/10/01 14:17:07 wjames5 Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Client.php,v 1.13 2010/04/18 02:27:24 wjames5 Exp $
  *
  * Copyright ( c ) 2006 bitweaver.org
  * All Rights Reserved. See below for details and a complete list of authors.
@@ -34,7 +34,7 @@ class Client extends LibertyContent {
 		LibertyContent::LibertyContent();
 		$this->registerContentType( CLIENT_CONTENT_TYPE_GUID, array(
 				'content_type_guid' => CLIENT_CONTENT_TYPE_GUID,
-				'content_description' => 'Client Entry',
+				'content_name' => 'Client Entry',
 				'handler_class' => 'Client',
 				'handler_package' => 'warehouse',
 				'handler_file' => 'Client.php',
@@ -264,8 +264,8 @@ class Client extends LibertyContent {
 
 		if( !empty( $pHash['title'] ) ) {
 			$ret = "Client - ".$this->mInfo['title'];
-		} elseif( !empty( $pHash['content_description'] ) ) {
-			$ret = $pHash['content_description'];
+		} elseif( !empty( $pHash['content_name'] ) ) {
+			$ret = $pHash['content_name'];
 		}
 		return $ret;
 	}

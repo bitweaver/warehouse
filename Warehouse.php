@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Warehouse.php,v 1.8 2009/10/01 14:17:07 wjames5 Exp $ 
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Warehouse.php,v 1.9 2010/04/18 02:27:24 wjames5 Exp $ 
  *
  * Copyright ( c ) 2006 bitweaver.org
  * All Rights Reserved. See below for details and a complete list of authors.
@@ -33,7 +33,7 @@ class Warehouse extends LibertyContent {
 		LibertyContent::LibertyContent();
 		$this->registerContentType( WAREHOUSE_CONTENT_TYPE_GUID, array(
 				'content_type_guid' => WAREHOUSE_CONTENT_TYPE_GUID,
-				'content_description' => 'Warehosue Location',
+				'content_name' => 'Warehosue Location',
 				'handler_class' => 'Warehouse',
 				'handler_package' => 'warehouse',
 				'handler_file' => 'Warehouse.php',
@@ -253,8 +253,8 @@ class Warehouse extends LibertyContent {
 
 		if( !empty( $pHash['title'] ) ) {
 			$ret = "IR-".$this->mInfo['ir_id'].'-'.$this->mInfo['title'];
-		} elseif( !empty( $pHash['content_description'] ) ) {
-			$ret = $pHash['content_description'];
+		} elseif( !empty( $pHash['content_name'] ) ) {
+			$ret = $pHash['content_name'];
 		}
 		return $ret;
 	}

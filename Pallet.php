@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Pallet.php,v 1.6 2009/10/01 14:17:07 wjames5 Exp $ 
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Pallet.php,v 1.7 2010/04/18 02:27:24 wjames5 Exp $ 
  *
  * Copyright ( c ) 2006 bitweaver.org
  * All Rights Reserved. See below for details and a complete list of authors.
@@ -33,7 +33,7 @@ class Pallet extends LibertyContent {
 		LibertyContent::LibertyContent();
 		$this->registerContentType( PALLET_CONTENT_TYPE_GUID, array(
 				'content_type_guid' => PALLET_CONTENT_TYPE_GUID,
-				'content_description' => 'Pallet Location',
+				'content_name' => 'Pallet Location',
 				'handler_class' => 'Pallet',
 				'handler_package' => 'warehouse',
 				'handler_file' => 'Pallet.php',

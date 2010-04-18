@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Product.php,v 1.6 2009/10/01 14:17:07 wjames5 Exp $ 
+ * @version $Header: /cvsroot/bitweaver/_bit_warehouse/Product.php,v 1.7 2010/04/18 02:27:24 wjames5 Exp $ 
  *
  * Copyright ( c ) 2006 bitweaver.org
  * All Rights Reserved. See below for details and a complete list of authors.
@@ -33,7 +33,7 @@ class Product extends LibertyContent {
 		LibertyContent::LibertyContent();
 		$this->registerContentType( PRODUCT_CONTENT_TYPE_GUID, array(
 				'content_type_guid' => PRODUCT_CONTENT_TYPE_GUID,
-				'content_description' => 'Product Description',
+				'content_name' => 'Product Description',
 				'handler_class' => 'Product',
 				'handler_package' => 'warehouse',
 				'handler_file' => 'Product.php',
