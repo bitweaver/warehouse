@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_warehouse/list_pallets.php,v 1.3 2010/02/08 21:27:27 wjames5 Exp $
+ * @version $Header$
  * @package warehouse
  * @subpackage functions
  */
