@@ -207,13 +207,12 @@ class Warehouse extends LibertyContent {
     * @param array different possibilities depending on derived class
     * @return string the link to display the page.
     */
-	function getDisplayUrl( $pContentId=NULL ) {
-		global $gBitSystem;
-		if( empty( $pContentId ) ) {
-			$pContentId = $this->mContentId;
+	function getDisplayUrlFromHash( $pParamHash ) {
+		$ret = '';
+		if( !empty( $pParamHash['content_id'] ) ) {
+			$ret = WAREHOUSE_PKG_URL.'index.php?content_id='.$pParamHash['content_id'];
 		}
-
-		return WAREHOUSE_PKG_URL.'index.php?content_id='.$pContentId;
+		return $ret;
 	}
 
 	/**
@@ -227,9 +226,9 @@ class Warehouse extends LibertyContent {
 		if ( $this->mContentId != $aux['content_id'] ) $this->load($aux['content_id']);
 
 		if (empty($this->mInfo['ir_id']) ) {
-			$ret = '<a href="'.$this->getDisplayUrl($aux['content_id']).'">'.$aux['title'].'</a>';
+			$ret = '<a href="'.$this->getDisplayUrlFromHash( $aux ).'">'.$aux['title'].'</a>';
 		} else {
-			$ret = '<a href="'.$this->getDisplayUrl($aux['content_id']).'">'."IR-".$this->mInfo['ir_id'].'-'.$this->mInfo['title'].'</a>';
+			$ret = '<a href="'.$this->getDisplayUrl().'">'."IR-".$this->mInfo['ir_id'].'-'.$this->getTitle() .'</a>';
 		}
 		return $ret;
 	}

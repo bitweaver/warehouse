@@ -218,13 +218,12 @@ class Client extends LibertyContent {
 	 * @param array different possibilities depending on derived class
 	 * @return string the link to display the page.
 	 */
-	function getDisplayUrl( $pContentId=NULL ) {
-		global $gBitSystem;
-		if( empty( $pContentId ) ) {
-			$pContentId = $this->mContentId;
+	function getDisplayUrlFromHash( $pParamHash ) {
+		$ret = '';
+		if( !empty( $pParamHash['content_id'] ) ) {
+			$ret = WAREHOUSE_PKG_URL.'index.php?content_id='.$pParamHash['content_id'];
 		}
-
-		return WAREHOUSE_PKG_URL.'index.php?content_id='.$pContentId;
+		return $ret;
 	}
 
 	/**
@@ -238,9 +237,9 @@ class Client extends LibertyContent {
 		if ( $this->mContentId != $aux['content_id'] ) $this->load($aux['content_id']);
 
 		if (empty($this->mInfo['content_id']) ) {
-			$ret = '<a href="'.$this->getDisplayUrl($aux['content_id']).'">'.$aux['title'].'</a>';
+			$ret = '<a href="'.$this->getDisplayUrlFromHash( $aux ).'">'.$aux['title'].'</a>';
 		} else {
-			$ret = '<a href="'.$this->getDisplayUrl($aux['content_id']).'">'."Client - ".$this->mInfo['title'].'</a>';
+			$ret = '<a href="'.$this->getDisplayUrl().'">'."Client - ".$this->getTitle().'</a>';
 		}
 		return $ret;
 	}
@@ -318,7 +317,7 @@ class Client extends LibertyContent {
 		$this->mDb->CompleteTrans();
 
 		while ($res = $result->fetchRow()) {
-			$res['client_url'] = $this->getDisplayUrl( $res['content_id'] );
+			$res['client_url'] = $this->getDisplayUrlFromHash( $res );
 			$ret[] = $res;
 		}
 
