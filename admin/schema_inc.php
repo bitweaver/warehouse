@@ -8,10 +8,10 @@ $tables = array(
 	client C(4),
 	indate T,
 	qty I4,
-	hold C1,
+	hold C(1),
 	qtyin I4,
 	notes X,
-	bopen C1
+	bopen C(1)
 ",
 
 'warehouse_client' => "
@@ -24,7 +24,7 @@ $tables = array(
 
 'warehouse_customer' => "
 	custno C(10) PRIMARY,
-	type1 C1 DEFAULT 0,
+	type1 C(1) DEFAULT 0,
 	del_ad_no C(3),
 	custname C(32) NOTNULL,
 	address1 C(32),
@@ -77,8 +77,8 @@ $tables = array(
 	partno C(10),
 	batch C(10),
 	qty I4,
-	ropen C1,
-	hold C1,
+	ropen C(1),
+	hold C(1),
 	palletno I8,
 	notes X
 ",
@@ -88,9 +88,9 @@ $tables = array(
 	partno C(10) PRIMARY,
 	batch C(10) PRIMARY,
 	qty I4,
-	subp C1,
-	hold C1,
-	sopen C1,
+	subp C(1),
+	hold C(1),
+	sopen C(1),
 	palletno I8,
 	notes X
 ",
@@ -100,9 +100,9 @@ $tables = array(
 	partno C(10),
 	batch C(10),
 	fromp C(6),
-	fromsubp C1,
+	fromsubp C(1),
 	top C(6),
-	tosubp C1,
+	tosubp C(1),
 	cof C(3),
 	qty I4,
 	palletno I8,
@@ -179,6 +179,6 @@ if( defined( 'RSS_PKG_NAME' )) {
 // ### Register content types
 $gBitInstaller->registerContentObjects( WAREHOUSE_PKG_NAME, array( 
 	'Warehouse'=>WAREHOUSE_PKG_PATH.'Warehouse.php',
-	'WarehousePallet'=>WAREHOUSE_PKG_PATH.'WarehousePallet.php',
+	'Pallet'=>WAREHOUSE_PKG_PATH.'Pallet.php',
 ));
 ?>
