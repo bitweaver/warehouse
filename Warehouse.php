@@ -30,7 +30,7 @@ class Warehouse extends LibertyContent {
 	 * @param integer Base content_id identifier 
 	 */
 	function Warehouse( $pWarehouseId = NULL, $pContentId = NULL ) {
-		LibertyContent::LibertyContent();
+		parent::__construct();
 		$this->registerContentType( WAREHOUSE_CONTENT_TYPE_GUID, array(
 				'content_type_guid' => WAREHOUSE_CONTENT_TYPE_GUID,
 				'content_name' => 'Warehosue Location',

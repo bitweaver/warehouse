@@ -30,7 +30,7 @@ class Pallet extends LibertyContent {
 	 * @param integer Base content_id identifier 
 	 */
 	function Pallet( $pPalletId = NULL, $pContentId = NULL ) {
-		LibertyContent::LibertyContent();
+		parent::__construct();
 		$this->registerContentType( PALLET_CONTENT_TYPE_GUID, array(
 				'content_type_guid' => PALLET_CONTENT_TYPE_GUID,
 				'content_name' => 'Pallet Location',

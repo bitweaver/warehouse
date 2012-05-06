@@ -30,7 +30,7 @@ class Product extends LibertyContent {
 	 * @param integer Base content_id identifier 
 	 */
 	function Product( $pProductId = NULL, $pContentId = NULL ) {
-		LibertyContent::LibertyContent();
+		parent::__construct();
 		$this->registerContentType( PRODUCT_CONTENT_TYPE_GUID, array(
 				'content_type_guid' => PRODUCT_CONTENT_TYPE_GUID,
 				'content_name' => 'Product Description',

@@ -31,7 +31,7 @@ class Client extends LibertyContent {
 	 * @param integer Base content_id identifier 
 	 */
 	function Client( $pClientId = NULL, $pContentId = NULL ) {
-		LibertyContent::LibertyContent();
+		parent::__construct();
 		$this->registerContentType( CLIENT_CONTENT_TYPE_GUID, array(
 				'content_type_guid' => CLIENT_CONTENT_TYPE_GUID,
 				'content_name' => 'Client Entry',
