@@ -5,7 +5,7 @@
 		<a href="edit.php?content_id={$clientInfo.content_id}" {if $beingEdited eq 'y'}{popup_init src="`$gBitLoc.THEMES_PKG_URL`overlib.js"}{popup text="$semUser" width="-1"}{/if}>{booticon iname="icon-edit" ipackage="icons" iexplain="edit"}</a>
       {/if}
     {/if}
-    <a title="{tr}print{/tr}" href="print.php?content_id={$clientInfo.content_id}">{biticon ipackage="icons" iname="document-print" iexplain="print"}</a>
+    <a title="{tr}print{/tr}" href="print.php?content_id={$clientInfo.content_id}">{booticon iname="icon-print"  ipackage="icons"  iexplain="print"}</a>
       {if $gBitUser->hasPermission('p_warehouse_expunge')}
         <a title="{tr}remove this citizen{/tr}" href="remove_client.php?content_id={$clientInfo.content_id}">{booticon iname="icon-trash" ipackage="icons" iexplain="delete"}</a>
       {/if}
