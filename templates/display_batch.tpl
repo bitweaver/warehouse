@@ -1,11 +1,11 @@
 		<hr />
-		<div class="row">
+		<div class="control-group">
 			{formlabel label="Batch Number" for="Batch_no"}
 			{forminput}
 				{$productInfo.batch_no|escape} - {$productInfo.batch_date|bit_short_date}
 			{/forminput}
 		</div>
-		<div class="row">
+		<div class="control-group">
 			{formlabel label="Pallet Movements for Batch" for="batchmove"}
 			{forminput}
 			<table>

@@ -1,7 +1,7 @@
 		{assign var=fromprefcnt value=$palletInfo.fromp|@count}
 		{jstab title="From Pallet ($fromprefcnt)"}
 		{legend legend="From Pallet"}
-		<div class="row">
+		<div class="control-group">
 			{formlabel label="From Pallet" for="fromp"}
 			{forminput}
 			<table>

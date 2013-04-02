@@ -1,7 +1,7 @@
 		{assign var=toprefcnt value=$palletInfo.top|@count}
 		{jstab title="To Pallet ($toprefcnt)"}
 		{legend legend="To Pallet"}
-		<div class="row">
+		<div class="control-group">
 			{formlabel label="To Pallet" for="top"}
 			{forminput}
 			<table>

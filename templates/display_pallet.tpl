@@ -2,7 +2,7 @@
 	<div class="content">
 
 		{if isset($palletInfo.name) && ($palletInfo.name <> '') }
-		<div class="row">
+		<div class="control-group">
 			{formlabel label="Name" for="name"}
 			{forminput}
 				{$palletInfo.name|escape} 
@@ -10,7 +10,7 @@
 		</div>
 		{/if}
 		{if isset($palletInfo.address1) && ($palletInfo.address1 <> '') }
-		<div class="row">
+		<div class="control-group">
 			{formlabel label="Address" for="address"}
 			{forminput}
 				{$palletInfo.address1|escape},{$palletInfo.address2|escape},{$palletInfo.posttown|escape},{$palletInfo.county|escape},{$palletInfo.postcode|escape}
@@ -18,7 +18,7 @@
 		</div>
 		{/if}
 		{if isset($palletInfo.contact) && ($palletInfo.contact <> '') }
-		<div class="row">
+		<div class="control-group">
 			{formlabel label="Contact" for="contact"}
 			{forminput}
 				{$palletInfo.contact|escape}

@@ -1,7 +1,7 @@
 		{assign var=barefcnt value=$productInfo.batch|@count}
 		{jstab title="Batches ($barefcnt)"}
 		{legend legend="Batches"}
-		<div class="row">
+		<div class="control-group">
 			{formlabel label="Batches" for="batch"}
 			{forminput}
 			<table>
