@@ -8,7 +8,7 @@
 
 		<div class="navbar">
 			<ul class="sortby">
-				<li>{biticon ipackage="icons" iname="emblem-symbolic-link" iexplain="sort by" iforce="icon"}</li>
+				<li>{booticon iname="icon-circle-arrow-right"  ipackage="icons"  iexplain="sort by" iforce="icon"}</li>
 				{if $gBitSystem->isFeatureActive('warehouse_list_warehouse')}
 					<li>{smartlink ititle="Warehouse ID" isort="warehouse" user_id=$gQuerUserId offset=$iMaxRows}</li>
 				{/if}
