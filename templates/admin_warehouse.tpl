@@ -133,7 +133,7 @@
 		{/jstab}
 
 		<div class="control-group submit">
-			<input type="submit" name="fisheyeAdminSubmit" value="{tr}Change Preferences{/tr}" />
+			<input type="submit" class="btn" name="fisheyeAdminSubmit" value="{tr}Change Preferences{/tr}" />
 		</div>
 	{/jstabs}
 {/form}
