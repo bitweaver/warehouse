@@ -1,5 +1,5 @@
 {strip}
-<a class="dropdown-toggle" data-toggle="dropdown" href="#"> {tr}{$packageMenuTitle}{/tr} <b class="caret"></b></a>
+{if $packageMenuTitle}<a class="dropdown-toggle" data-toggle="dropdown" href="#"> {tr}{$packageMenuTitle}{/tr} <b class="caret"></b></a>{/if}
 <ul class="dropdown-menu">
 	<li><a class="item" href="{$smarty.const.WAREHOUSE_PKG_URL}index.php">{booticon iname="icon-calendar" iexplain="Warehouse Management" ilocation=menu}</a></li>
 	<li><a class="item" href="{$smarty.const.WAREHOUSE_PKG_URL}list_pallets.php">{booticon iname="icon-calendar" iexplain="Pallet Location List" ilocation=menu}</a></li>
