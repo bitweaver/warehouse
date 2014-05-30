@@ -1,7 +1,7 @@
 		{assign var=stkrefcnt value=$productInfo.stock|@count}
 		{jstab title="Stock ($stkrefcnt)"}
 		{legend legend="Stock"}
-		<div class="control-group">
+		<div class="form-group">
 			{formlabel label="Stock" for="stock"}
 			{forminput}
 			<table>

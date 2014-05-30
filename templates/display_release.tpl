@@ -1,11 +1,11 @@
 		<hr />
-		<div class="control-group">
+		<div class="form-group">
 			{formlabel label="Release Number" for="release_no"}
 			{forminput}
 				{$clientInfo.release_no|escape} - {$clientInfo.release_date|bit_short_date}
 			{/forminput}
 		</div>
-		<div class="control-group">
+		<div class="form-group">
 			{formlabel label="Release" for="releaseno"}
 			{forminput}
 			<table>

@@ -1,7 +1,7 @@
 		{assign var=prorefcnt value=$clientInfo.product|@count}
 		{jstab title="Products ($prorefcnt)"}
 		{legend legend="Products"}
-		<div class="control-group">
+		<div class="form-group">
 			{formlabel label="Products" for="product"}
 			{forminput}
 			<table>

@@ -1,7 +1,7 @@
 		{assign var=moveprefcnt value=$productInfo.move|@count}
 		{jstab title="Pallet Movements ($moveprefcnt)"}
 		{legend legend="Pallet Movements"}
-		<div class="control-group">
+		<div class="form-group">
 			{formlabel label="Pallet Movements" for="move"}
 			{forminput}
 			<table>

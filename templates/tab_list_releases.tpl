@@ -1,7 +1,7 @@
 		{assign var=relrefcnt value=$clientInfo.release|@count}
 		{jstab title="Release ($relrefcnt)"}
 		{legend legend="Release"}
-		<div class="control-group">
+		<div class="form-group">
 			{formlabel label="Release" for="release"}
 			{forminput}
 			<table>
